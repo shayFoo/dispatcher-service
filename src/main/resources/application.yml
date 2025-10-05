@@ -1,8 +1,33 @@
 server:
-    port: 9003
+  port: 9003
 spring:
-    application:
-        name: dispatcher-service
-    cloud:
-      function:
-        definition: pack|label
+  application:
+    name: dispatcher-service
+  config:
+    import: "optional:configserver:"
+  cloud:
+    function:
+      definition: pack|label
+    stream:
+      bindings:
+        packlabel-in-0:
+          destination: order-accepted
+          group: ${spring.application.name}
+        packlabel-out-0:
+          destination: order-dispatched
+    config:
+      uri: http://localhost:8888
+      request-connect-timeout: 5000
+      request-read-timeout: 5000
+      fail-fast: false
+      retry:
+        max-attempts: 6
+        initial-interval: 1000
+        max-interval: 2000
+        multiplier: 1.1
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+    connection-timeout: 5s
