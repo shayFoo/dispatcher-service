@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         app: dispatcher-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9001"
+        prometheus.io/path: "/actuator/prometheus"
     spec:
       securityContext:
         runAsNonRoot: true
@@ -63,10 +67,6 @@ spec:
               port: 9000
             initialDelaySeconds: 10
             periodSeconds: 5
-          annotations:
-            prometheus.io/scrape: "true"
-            prometheus.io/port: "9001"
-            prometheus.io/path: "/actuator/prometheus"
       volumes:
         - name: tmp
           emptyDir: { }
