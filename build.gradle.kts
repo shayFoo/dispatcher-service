@@ -26,6 +26,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    runtimeOnly("io.micrometer:micrometer-tracing-bridge-otel")
+    runtimeOnly("io.opentelemetry:opentelemetry-exporter-otlp")
     testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
@@ -46,6 +51,8 @@ tasks.withType<Test> {
 tasks.named<BootBuildImage>("bootBuildImage") {
     environment = mapOf(
         "BP_JVM_VERSION" to "25",
+        "BPE_DELIM_JAVA_TOOL_OPTIONS" to " ",
+        "BPE_APPEND_JAVA_TOOL_OPTIONS" to "-Duser.timezone=Asia/Tokyo",
         "LANG" to "ja_JP.UTF-8",
         "LANGUAGE" to "ja_JP:ja",
         "LC_ALL" to "ja_JP.UTF-8",
