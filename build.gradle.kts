@@ -85,7 +85,7 @@ jib {
             "LC_ALL" to "ja_JP.UTF-8",
         )
         workingDirectory = "/workspace"
-        mainClass = "com.polarbookshop.edge_service.EdgeServiceApplication"
+        mainClass = "com.polarbookshop.dispatcher_service.DispatcherServiceApplication"
         ports = listOf("9001")
     }
 }
