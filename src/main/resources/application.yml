@@ -4,7 +4,7 @@ spring:
   application:
     name: dispatcher-service
   config:
-    import: "optional:configserver:"
+    import: ""
   cloud:
     function:
       definition: pack|label
@@ -16,6 +16,7 @@ spring:
         packlabel-out-0:
           destination: order-dispatched
     config:
+      enabled: false
       uri: http://localhost:8888
       request-connect-timeout: 5000
       request-read-timeout: 5000
