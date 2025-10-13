@@ -33,14 +33,6 @@ spec:
           env:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"
-            - name: SPRING_CLOUD_CONFIG_FAIL-FAST
-              value: "true"
-            - name: SPRING_CLOUD_CONFIG_RETRY_MAX-ATTEMPTS
-              value: "10"
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: http://config-service
-            - name: SPRING_RABBITMQ_HOST
-              value: polar-rabbitmq
           resources:
             requests:
               memory: "512Mi"
@@ -51,6 +43,8 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            - name: dispatcher-config-volume
+              mountPath: /workspace/config
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -70,3 +64,6 @@ spec:
       volumes:
         - name: tmp
           emptyDir: { }
+        - name: dispatcher-config-volume
+          configMap:
+            name: dispatcher-config
